@@ -1,38 +1,32 @@
 import type { Metadata } from "next";
 import DemoShell from "@/components/demos/DemoShell";
 import RealDemo from "@/components/demos/RealDemo";
-import { getMedia } from "@/lib/media";
+import { getMedia, type Captions } from "@/lib/media";
 
 export const metadata: Metadata = { title: "Demo · StockFlow — Leider Cadena" };
 
 /* Demo de StockFlow: capturas REALES de la app (docs/screenshots del repositorio)
-   en public/demos/stockflow. Puedes agregar un video, por ejemplo 00-recorrido.mp4 */
-const notes: Record<string, string> = {
-  Inicio: "Ventas del día y del mes, ganancia, valor del inventario, ventas de 7 días, más vendidos y stock bajo.",
-  Vender: "Punto de venta: búsqueda por código o lector, cliente, pago rápido en efectivo, IVA y cambio. F2 buscar, F12 cobrar.",
-  Facturas: "Consecutivo FV-000001, detalle, PDF y anulación que devuelve las unidades al inventario.",
-  Productos: "Código, costo, precio, margen, stock y stock mínimo, con filtros y exportación a CSV.",
-  Inventario: "Entradas por compra con costo promedio ponderado, ajustes, pérdidas y kardex.",
-  Reportes: "Ventas por periodo, ganancia, ticket promedio, IVA cobrado y más vendidos.",
-  "Asistente ia": "Gemini calcula qué comprar a cada proveedor y redacta la nota de pedido.",
-  "Factura de proveedor leida con ia": "Gemini lee la foto o el PDF de una factura de proveedor y prepara la compra para revisar.",
-  Formularios: "Diálogos de producto, proveedor y categorías con validaciones.",
-  Configuracion: "Datos del negocio, régimen e IVA, numeración de facturas y tema.",
-  "Tema oscuro": "La misma app con el tema oscuro.",
+   en public/demos/stockflow. Puedes agregar un video, por ejemplo 00-walkthrough.mp4 */
+const captions: Captions = {
+  dashboard: { title: "Inicio", note: "Ventas del día y del mes, ganancia, valor del inventario, ventas de 7 días, más vendidos y stock bajo." },
+  "point-of-sale": { title: "Vender", note: "Punto de venta: búsqueda por código o lector, cliente, pago rápido, IVA y cambio. F2 buscar, F12 cobrar." },
+  invoices: { title: "Facturas", note: "Consecutivo FV-000001, detalle, PDF y anulación que devuelve las unidades al inventario." },
+  products: { title: "Productos", note: "Código, costo, precio, margen, stock y stock mínimo, con filtros y exportación a CSV." },
+  inventory: { title: "Inventario", note: "Entradas por compra con costo promedio ponderado, ajustes, pérdidas y kardex." },
+  reports: { title: "Reportes", note: "Ventas por periodo, ganancia, ticket promedio, IVA cobrado y más vendidos." },
+  "ai-assistant": { title: "Asistente con IA", note: "Gemini calcula qué comprar a cada proveedor y redacta la nota de pedido." },
+  "ai-invoice-review": { title: "Factura de proveedor leída con IA", note: "Gemini lee la foto o el PDF de una factura y prepara la compra para revisar." },
+  forms: { title: "Formularios", note: "Diálogos de producto, proveedor y categorías con validaciones." },
+  settings: { title: "Configuración", note: "Datos del negocio, régimen e IVA, numeración de facturas y tema." },
+  "dark-theme": { title: "Tema oscuro", note: "La misma app con el tema oscuro." },
 };
 
 export default function Page() {
   return (
     <DemoShell
-      title="StockFlow"
-      subtitle="Aplicación de escritorio para controlar el inventario y facturar las ventas de un negocio pequeño. Funciona sin internet en Windows, macOS y Linux."
-      tags={["Java 21", "JavaFX 21", "Spring Boot 3", "H2 + Flyway", "PDFBox", "Gemini", "Arquitectura hexagonal"]}
-      accent="#1d6fb8"
+      slug="stockflow"
       wide
-      links={[
-        { label: "Código", href: "https://github.com/LeiderCadena2110/App_Escritorio" },
-        { label: "Instaladores", href: "https://github.com/LeiderCadena2110/App_Escritorio/releases" },
-      ]}
+      subtitle="Aplicación de escritorio para controlar el inventario y facturar las ventas de un negocio pequeño. Funciona sin internet en Windows, macOS y Linux."
       steps={[
         "Presenta el problema: los negocios pequeños llevan el inventario en cuadernos o en Excel.",
         "Inicio: ventas, ganancia, valor del inventario y productos con poco stock.",
@@ -43,7 +37,7 @@ export default function Page() {
         "Cierra con la arquitectura hexagonal, las +110 pruebas y los instaladores por GitHub Actions.",
       ]}
     >
-      <RealDemo device="window" folder="public/demos/stockflow/" media={getMedia("stockflow")} notes={notes} />
+      <RealDemo device="window" folder="public/demos/stockflow/" media={getMedia("stockflow")} captions={captions} />
     </DemoShell>
   );
 }
