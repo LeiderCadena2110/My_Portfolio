@@ -73,9 +73,7 @@ export default function Hero() {
           </p>
 
           <h1 className="enter mt-4 font-display text-[clamp(3rem,9vw,7.2rem)] leading-[.95] font-medium tracking-tight text-sapphire-900" style={{ ["--d" as string]: 2 }}>
-            ¡Hola! 👋
-            <br />
-            Soy <em className="font-serif font-normal text-ember-600 italic">{profile.firstName}.</em>
+            Hola, soy <em className="font-serif font-normal text-ember-600 italic">{profile.firstName}.</em>
           </h1>
 
           <p className="enter mt-5 min-h-[1.4em] text-[clamp(1.25rem,2.6vw,1.9rem)] font-light text-sapphire-800" style={{ ["--d" as string]: 3 }} aria-label={profile.roles.join(", ")}>
@@ -85,6 +83,14 @@ export default function Hero() {
           <p className="enter mt-6 max-w-xl leading-relaxed text-stone" style={{ ["--d" as string]: 4 }}>
             {profile.greeting}
           </p>
+
+          <ul className="enter mt-5 flex flex-wrap gap-2" style={{ ["--d" as string]: 4 }} aria-label="Lo que me gusta">
+            {profile.interests.map((t, i) => (
+              <li key={t} className="flex items-center gap-2 rounded-full bg-pearl-200 px-3.5 py-1.5 text-sm font-medium text-sapphire-800">
+                <span aria-hidden="true">{["⚽", "🤝", "⚙️"][i] ?? "•"}</span> {t}
+              </li>
+            ))}
+          </ul>
 
           <div className="enter mt-9 flex flex-wrap gap-3" style={{ ["--d" as string]: 5 }}>
             <a href={profile.cvUrl} download
@@ -100,7 +106,7 @@ export default function Hero() {
 
         {/* Tarjeta de la foto */}
         <div className="enter mx-auto w-full max-w-[400px] [perspective:1200px]" style={{ ["--d" as string]: 3 }} onPointerMove={onMove} onPointerLeave={onLeave}>
-          <div ref={card} className="relative transition-transform duration-300 ease-out [transform-style:preserve-3d]">
+          <div ref={card} className="group relative transition-transform duration-300 ease-out [transform-style:preserve-3d]">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-sapphire-900 shadow-[0_50px_80px_-40px_rgba(11,29,71,.9)]">
               {/* Símbolos de código de fondo */}
               <div aria-hidden="true" className="absolute inset-0 font-mono text-sapphire-700 select-none">
@@ -111,7 +117,7 @@ export default function Hero() {
               </div>
               <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-2/3 bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,90,18,.35),transparent_65%)]" />
               <Image src="/images/leider-cutout.webp" alt={`Foto de ${profile.name}`} fill priority sizes="(max-width: 1024px) 90vw, 400px"
-                className="object-contain object-bottom [transform:translateZ(30px)]" />
+                className="object-contain object-bottom grayscale transition-[filter] duration-700 group-hover:grayscale-0" />
 
               {/* Etiqueta inferior */}
               <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-2xl border border-pearl/10 bg-sapphire-950/70 px-4 py-3 backdrop-blur-md">

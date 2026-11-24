@@ -10,6 +10,7 @@ export type Profile = {
   role: string;
   semester: string;
   greeting: string; // frase corta del Hero
+  interests: string[]; // gustos que se muestran en el Hero
   roles: string[]; // palabras que se escriben solas en el Hero
   statement: string; // frase grande de "Sobre mí"; las palabras entre **asteriscos** se resaltan
   about: string[]; // párrafos de "Sobre mí"
@@ -29,7 +30,7 @@ export type Profile = {
 export type ProjectCover =
   | { kind: "phone"; src: string }
   | { kind: "window"; src: string }
-  | { kind: "watch" }; // ilustración del reloj mientras no haya capturas
+  | { kind: "watch"; src: string }; // captura redonda del reloj
 
 export type Project = {
   slug: string;
@@ -62,6 +63,7 @@ export type ExperienceItem = {
   description: string;
   highlights: string[];
   stack?: string[];
+  image?: string; // foto o captura opcional para la tarjeta
 };
 
 export type StackKey = {

@@ -11,13 +11,14 @@ export const profile: Profile = {
   role: "Estudiante de Ingeniería de Software",
   semester: "5.º semestre",
   greeting:
-    "Estudio Ingeniería de Software y disfruto construir lo que no se ve: APIs, bases de datos y la arquitectura que hace que una app funcione bien. Mi stack: Node.js, NestJS, Express, Java con Spring Boot, PostgreSQL y Docker.",
+    "Estudiante de Ingeniería de Software enfocado en el backend: APIs, bases de datos y arquitectura. Fuera del código me gustan los deportes, y en los proyectos lo que más disfruto es trabajar en equipo.",
+  interests: ["Deportes", "Trabajo en equipo", "Backend"],
   roles: ["Backend Developer", "Arquitectura de Software", "Bases de Datos", "APIs y Cloud"],
   statement:
     "Construyo **sistemas backend** con **APIs claras**, bases de datos bien pensadas y una **arquitectura que aguanta**, para que una idea termine siendo una **app que la gente usa de verdad**.",
   about: [
-    "Me encanta programar y ver cómo una idea se convierte en algo que funciona. Empecé por el backend y ahí me quedé: diseñar la base de datos, pensar los servicios y dejar el código ordenado para el siguiente que lo lea.",
-    "Hoy curso quinto semestre en la Universidad Cooperativa de Colombia, en Pasto, y trabajo mientras estudio. Esa combinación me enseñó a organizar el tiempo y a entender lo que un negocio real necesita de un sistema.",
+    "Curso quinto semestre en la Universidad Cooperativa de Colombia, en Pasto. Lo que más me atrae del software es lo que no se ve: cómo se guardan los datos, cómo se comunican los servicios y cómo se organiza el código para que otro lo entienda.",
+    "Trabajo mientras estudio y practico deporte, y de las dos cosas saqué lo mismo: disciplina y saber jugar en equipo. Por eso me siento cómodo en proyectos grupales, con ramas, pull requests y tareas repartidas.",
   ],
   motto: "Un buen sistema no es el que más cosas hace, sino el que se puede entender, probar y hacer crecer.",
   location: "Pasto, Nariño · Colombia",
