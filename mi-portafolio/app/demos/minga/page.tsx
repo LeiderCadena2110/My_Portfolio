@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import DemoShell from "@/components/demos/DemoShell";
-import MingaDemo from "@/components/demos/MingaDemo";
+import RealDemo from "@/components/demos/RealDemo";
+import { getMedia } from "@/lib/media";
 
 export const metadata: Metadata = { title: "Demo · Minga App — Leider Cadena" };
 
-/* Demo de Minga App: /demos/minga */
+/* Demo de Minga App: la versión web REAL (GitHub Pages) + capturas en public/demos/minga */
 export default function Page() {
   return (
     <DemoShell
@@ -15,19 +16,28 @@ export default function Page() {
       links={[
         { label: "Código", href: "https://github.com/LeiderCadena2110/AppMovil_MercadoCampesino" },
         { label: "APK", href: "https://github.com/LeiderCadena2110/AppMovil_MercadoCampesino/releases/latest" },
-        { label: "Versión web real", href: "https://leidercadena2110.github.io/AppMovil_MercadoCampesino/" },
+        { label: "Versión web", href: "https://leidercadena2110.github.io/AppMovil_MercadoCampesino/" },
       ]}
       steps={[
+        "1–2 minutos antes: abre la app para despertar el servidor gratuito de Render.",
         "Presenta el problema: el campesino vende barato a intermediarios y el comprador paga caro.",
-        "Entra como comprador: muestra el inicio, las categorías y busca «cafe» (encuentra «Café» sin tilde).",
-        "Abre «Pregúntale a Campi» y pide «Mercado con $50.000»; agrega todo al carrito.",
-        "En el carrito muestra que se agrupa por finca y confirma el pedido a domicilio.",
-        "Cambia a «Ver como productor»: el pedido le llegó a Don Efraín. Confírmalo y márcalo en camino.",
-        "Publica un producto con «Sugerir precio» y «Escribir con IA»; vuelve al comprador y búscalo en el catálogo.",
-        "Cierra con la arquitectura: API REST en Express + PostgreSQL en Neon, app Ionic con APK por GitHub Actions.",
+        "«Ya tengo cuenta» → comprador@demo.co / Clave1234. Muestra el inicio «¿Qué llevas hoy?» y las categorías.",
+        "Abre «Pregúntale a Campi» y pide armar un mercado con un presupuesto.",
+        "Agrega productos, muestra el carrito por finca y confirma el pedido.",
+        "Cierra sesión y entra con productor@demo.co: muestra el panel, el pedido recibido y publica un producto con IA.",
+        "Cierra con la arquitectura: API Express + PostgreSQL en Neon, app Ionic y APK automático con GitHub Actions.",
       ]}
     >
-      <MingaDemo />
+      <RealDemo
+        device="phone"
+        folder="public/demos/minga/"
+        media={getMedia("minga")}
+        live={{
+          url: "https://leidercadena2110.github.io/AppMovil_MercadoCampesino/",
+          label: "Minga App en vivo",
+          hint: "Es tu app real. Usuarios de prueba: comprador@demo.co y productor@demo.co (contraseña Clave1234). Si tarda, el servidor de Render se está despertando: espera un minuto.",
+        }}
+      />
     </DemoShell>
   );
 }
