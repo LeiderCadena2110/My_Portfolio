@@ -32,7 +32,7 @@ export default function DemoShell({ title, subtitle, tags, links, steps, accent,
       <main className={`mx-auto grid items-start gap-8 px-5 py-8 ${wide ? "max-w-[1320px]" : "max-w-7xl lg:grid-cols-[340px_1fr]"}`}>
         <aside className={wide ? "grid gap-6 lg:grid-cols-[1fr_1.1fr]" : "lg:sticky lg:top-6"}>
           <div>
-          <p className="font-mono text-xs tracking-widest uppercase" style={{ color: accent }}>Demo interactiva</p>
+          <p className="font-mono text-xs tracking-widest uppercase" style={{ color: accent }}>Demo · app real</p>
           <h1 className="mt-2 font-display text-3xl font-extrabold">{title}</h1>
           <p className="mt-3 text-haze">{subtitle}</p>
           <ul className="mt-4 flex flex-wrap gap-1.5">
@@ -55,7 +55,7 @@ export default function DemoShell({ title, subtitle, tags, links, steps, accent,
             </ol>
           </details>
           <p className="mt-4 text-xs text-haze">
-            Esta demo reproduce las pantallas y reglas de la app con datos de ejemplo y funciona sin internet. La app real está en el repositorio.
+            Todo lo que ves aquí es la app real: su versión web en vivo o capturas y videos tomados de la app funcionando.
           </p>
           </div>
         </aside>
