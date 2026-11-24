@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { stackKeys } from "@/data/skills";
 
 /* =============================================================================
-   ⭐ SECCIÓN ADICIONAL 1: HABILIDADES
+   ⭐ SECCIÓN ADICIONAL: HABILIDADES
    Teclado 3D hecho con CSS: cada tecla es una tecnología. Al pasar el cursor
    o tocarla se hunde y muestra su descripción en el panel.
    ============================================================================= */
@@ -55,7 +55,7 @@ export default function Skills() {
             ref={board}
             role="group"
             aria-label="Tecnologías"
-            className="keyboard relative grid grid-cols-[repeat(5,var(--key))] gap-[var(--gap)] rounded-[22px] bg-gradient-to-br from-sapphire-700 to-sapphire-950 p-[calc(var(--gap)*2.2)] max-[480px]:[--gap:6px] max-[480px]:[--key:44px]"
+            className="keyboard relative grid grid-cols-[repeat(6,var(--key))] gap-[var(--gap)] rounded-[22px] bg-gradient-to-br from-sapphire-700 to-sapphire-950 p-[calc(var(--gap)*2.2)] max-[480px]:[--gap:6px] max-[480px]:[--key:40px]"
           >
             {stackKeys.map((k, i) => (
               <button

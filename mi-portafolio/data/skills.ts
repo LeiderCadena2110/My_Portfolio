@@ -2,7 +2,7 @@ import type { StackKey } from "./types";
 
 /* =============================================================================
    ✏️ HABILIDADES (sección adicional): cada objeto es una tecla del teclado 3D.
-   5 teclas por fila; 20 teclas se ven mejor.
+   6 teclas por fila; 18 teclas se ven mejor.
    ============================================================================= */
 export const stackKeys: StackKey[] = [
   { label: "Nd", name: "Node.js", description: "Mi base para backend en JavaScript: APIs rápidas y livianas.", color: "sapphire" },
@@ -19,10 +19,8 @@ export const stackKeys: StackKey[] = [
   { label: "GH", name: "GitHub", description: "Repositorios, pull requests y trabajo en equipo.", color: "pearl" },
   { label: "AWS", name: "AWS", description: "EC2, ALB, Auto Scaling, RDS Multi-AZ y Lambda.", color: "ember" },
   { label: "Rn", name: "Render", description: "Despliegue de servidores (backend de HidraSmart).", color: "deep" },
-  { label: "TS", name: "TypeScript", description: "Tipado para código más seguro en NestJS, Angular y Next.js.", color: "sapphire" },
+  { label: "TS", name: "TypeScript", description: "Tipado para código más seguro en NestJS y Next.js.", color: "sapphire" },
   { label: "Nx", name: "Next.js", description: "Framework de React con el que está hecho este portafolio.", color: "pearl" },
   { label: "Tw", name: "Tailwind CSS", description: "Estilos con clases utilitarias y responsive.", color: "deep" },
-  { label: "Ng", name: "Angular · Ionic", description: "Frontend y apps móviles híbridas (Minga App).", color: "sapphire" },
   { label: "And", name: "Android Studio", description: "Apps para celular y smartwatch (HidraSmart).", color: "sapphire" },
-  { label: "UML", name: "UML y arquitectura", description: "Diagramas de clases, casos de uso y arquitectura antes de programar.", color: "pearl" },
 ];
