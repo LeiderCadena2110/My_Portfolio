@@ -17,7 +17,7 @@ siguiendo la guía del curso de Diseño de Interfaces: https://structure-portfol
 | 6. Experiencia **académica y laboral**, con fechas, de lo más reciente a lo más antiguo | `components/Experience.tsx` + `data/experience.ts` | ⚠️ cambia los `20XX` |
 | 7. Contactos: correo, LinkedIn, GitHub, formulario con validación y confirmación | `components/Contact.tsx` | ✅ (Formspree opcional) |
 | 8. Pie de página: nombre y © año, redes, enlaces, volver arriba, créditos | `components/Footer.tsx` | ✅ |
-| ⭐ Secciones adicionales | `components/Skills.tsx` (teclado 3D) y `components/GithubActivity.tsx` (contribuciones en GitHub, en vivo) | ✅ |
+| ⭐ Sección adicional | `components/Skills.tsx` (teclado 3D de habilidades) | ✅ |
 | Paleta 60·30·10 (zafiro, perla y naranja brasa) | `app/globals.css` | ✅ |
 | Responsive (celular, tablet, escritorio) | todas las secciones | ✅ |
 | Código en GitHub con commits | ver pasos abajo | ⏳ |
@@ -39,8 +39,7 @@ mi-portafolio/
 │  ├─ Projects.tsx    4 Proyectos
 │  ├─ Testimonials.tsx 5 Testimonios
 │  ├─ Experience.tsx  6 Experiencia
-│  ├─ Skills.tsx      ⭐ Adicional 1 (habilidades)
-│  ├─ GithubActivity.tsx ⭐ Adicional 2 (contribuciones en GitHub)
+│  ├─ Skills.tsx      ⭐ Adicional (habilidades)
 │  ├─ Contact.tsx     7 Contactos
 │  ├─ Footer.tsx      8 Pie de página
 │  ├─ Effects.tsx     barra de progreso, scroll reveal, efecto onda, cursor
@@ -84,8 +83,8 @@ Cada proyecto tiene su página de demo con un **guion paso a paso**. Todo lo que
 | Proyecto | Ruta | Qué muestra |
 |---|---|---|
 | Minga App | `/demos/minga` | 12 **capturas reales** de la app (comprador y productor) + pestaña con la **versión web en vivo** |
-| StockFlow | `/demos/stockflow` | Las 11 **capturas reales** de `docs/screenshots` del repositorio |
-| HidraSmart | `/demos/hidrasmart` | Tus **capturas y videos del emulador** dentro de un reloj (⚠️ falta agregarlas) |
+| StockFlow | `/demos/stockflow` | **Video del recorrido** (sin sonido) + las 11 **capturas reales** de `docs/screenshots` |
+| HidraSmart | `/demos/hidrasmart` | **Video del emulador** del reloj (sin sonido) + 10 capturas sacadas de ese video |
 | Nexus-7 (colaborador) | `/demos/nexus` | El **video de la Fase 6** y las capturas de `docs/media` del repo `moreno-stack/Nexuz-7` |
 
 ### Cómo agregar capturas o videos
