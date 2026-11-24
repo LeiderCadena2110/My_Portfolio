@@ -51,6 +51,21 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  // Cierra el menú y DESPUÉS baja a la sección. Si se salta con el scroll aún
+  // bloqueado (body.menu-open), los celulares ignoran el salto y no se mueve.
+  const goTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setOpen(false);
+    document.body.classList.remove("menu-open");
+    requestAnimationFrame(() => {
+      const target = document.querySelector(href);
+      if (!target) return;
+      const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
+      history.replaceState(null, "", href);
+    });
+  };
+
   const dark = onDark && !open;
   const tone = dark ? "text-pearl" : "text-sapphire-900";
 
@@ -64,7 +79,7 @@ export default function Navbar() {
           className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 transition-colors duration-300 ${tone}`}
         >
           {/* Logo */}
-          <a href="#inicio" onClick={() => setOpen(false)} className="flex items-center gap-3" aria-label="Ir al inicio">
+          <a href="#inicio" onClick={(e) => goTo(e, "#inicio")} className="flex items-center gap-3" aria-label="Ir al inicio">
             <span className={`grid size-9 place-items-center rounded-full font-mono text-xs font-bold transition-colors ${dark || open ? "bg-pearl text-sapphire-900" : "bg-sapphire-900 text-pearl"}`}>
               {profile.initials}
             </span>
@@ -129,7 +144,7 @@ export default function Navbar() {
               <li key={l.href} style={{ ["--i" as string]: i }}>
                 <a
                   href={l.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => goTo(e, l.href)}
                   tabIndex={open ? 0 : -1}
                   className={`group flex items-baseline gap-4 font-display text-[clamp(2.4rem,7vw,5.2rem)] leading-[1.02] font-semibold tracking-tight uppercase transition-colors ${
                     active === l.href ? "text-ember" : "text-pearl hover:text-ember"
