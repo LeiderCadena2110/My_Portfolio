@@ -42,12 +42,13 @@ mi-portafolio/
 │  ├─ Contact.tsx     7 Contactos (+ Globe.tsx)
 │  ├─ Footer.tsx      8 Pie de página
 │  ├─ Effects.tsx     barra de progreso, scroll reveal, efecto onda, cursor
-│  ├─ demos/          MingaDemo · HidraSmartDemo · StockFlowDemo · DemoShell
+│  ├─ demos/          RealDemo (marcos y recorrido) · DemoShell (página y guion)
 │  └─ Icons.tsx       íconos SVG
 ├─ data/              ← ✏️ TODO tu contenido, tipado con TypeScript
 │  ├─ types.ts · profile.ts · projects.ts · testimonials.ts · experience.ts · skills.ts
 └─ public/
    ├─ cv.pdf          ← tu hoja de vida (botón «Descargar CV»)
+   ├─ demos/          ← capturas y videos reales de cada app
    └─ images/         ← fotos
 ```
 
@@ -73,20 +74,32 @@ npm run dev        # abre http://localhost:3000
    `data/profile.ts` → `formEndpoint`. Sin eso, el botón abre la app de correo del visitante.
 6. **WhatsApp (opcional):** descomenta `whatsapp` en `data/profile.ts`.
 
-## 🎤 Demos para la sustentación
+## 🎤 Demos para la sustentación (tus apps reales)
 
-Cada proyecto tiene una demo interactiva dentro del mismo portafolio, con su **guion paso a paso** a la izquierda:
+Cada proyecto tiene su página de demo con un **guion paso a paso** a la izquierda. Todo lo que se ve es la app real:
 
 | Proyecto | Ruta | Qué muestra |
 |---|---|---|
-| Minga App | `/demos/minga` | Celular: comprador (inicio, búsqueda sin tildes, Campi con IA, carrito por finca, pedido) y productor (panel, pedidos que llegan del comprador, publicar con «Sugerir precio» y «Escribir con IA») |
-| HidraSmart | `/demos/hidrasmart` | Reloj Wear OS: anillo del día, registrar toma, entrenamiento con alertas (cada 20 s en la demo), resumen con análisis IA, coach, planear, historial y el Tile |
-| StockFlow | `/demos/stockflow` | Escritorio: panel, punto de venta con IVA 19 % y atajos F2/F12, factura FV-000051, anular factura, kardex con costo promedio, reportes y asistente IA |
+| Minga App | `/demos/minga` | **La app web real en vivo** (GitHub Pages) dentro de un celular + capturas opcionales |
+| HidraSmart | `/demos/hidrasmart` | Tus **capturas y videos del emulador** dentro de un reloj (o un celular) |
+| StockFlow | `/demos/stockflow` | Las **capturas reales** de la app (`docs/screenshots` del repositorio) y un video opcional |
 
-- Usan las mismas pantallas, colores, textos, fórmulas y datos de ejemplo de tus repositorios, y funcionan **sin internet**
-  (no dependen de Render, que se duerme en el plan gratis).
-- Lo que haces queda guardado en ese navegador; el botón **Reiniciar demo** las deja como nuevas antes de presentar.
-- Los archivos están en `components/demos/` (un componente por demo) y `app/demos/` (las páginas).
+### Cómo agregar capturas o videos
+
+1. Copia los archivos en `public/demos/minga/`, `public/demos/hidrasmart/` o `public/demos/stockflow/`.
+2. Nómbralos con número y título: `01-inicio.png`, `02-registrar-toma.png`, `03-entrenamiento.mp4`.
+   El número ordena el recorrido y el resto del nombre es el título que se muestra.
+3. Si termina en `-celular` (ej. `05-coach-celular.png`) se muestra en marco de celular; `-reloj`, en marco de reloj.
+4. Recarga la página (con `npm run dev` aparecen al instante; en Vercel, después del `git push`).
+
+Formatos: `.png .jpg .webp .gif` y videos `.mp4 .webm` (cortos, de menos de 20 MB).
+
+### Cómo sacar capturas y videos
+
+- **Android Studio (HidraSmart y Minga):** en el emulador, el ícono de cámara 📷 toma captura;
+  en *Running Devices* el botón *Record screen* graba video. También: `adb shell screenrecord /sdcard/demo.mp4`.
+- **StockFlow (Windows):** `Win + Shift + S` para capturas y `Win + Alt + R` (Xbox Game Bar) para grabar video.
+- **Minga:** la versión web ya está en vivo; el servidor gratis de Render se duerme, ábrela 1–2 minutos antes.
 
 ## 🐙 Subir a GitHub
 
