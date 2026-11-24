@@ -17,7 +17,7 @@ const facts = [
   { label: "Ubicación", value: "Pasto, Nariño" },
   { label: "Estudio", value: "Ing. de Software · 5.º sem." },
   { label: "Enfoque", value: "Backend y bases de datos" },
-  { label: "Busco", value: "Prácticas y primer empleo" },
+  { label: "Me gusta", value: "Deportes y trabajo en equipo" },
 ];
 
 /* Convierte "texto **resaltado**" en palabras sueltas, marcando las resaltadas */
@@ -88,9 +88,9 @@ export default function About() {
         </div>
 
         <div className="min-w-0">
-          <p className="reveal kicker text-ember">Resumen</p>
+          <p className="reveal kicker text-ember">Quién soy</p>
           <h2 className="reveal mt-3 font-display text-[clamp(2rem,4.5vw,3.4rem)] leading-[1.05] font-medium tracking-tight">
-            Encantado de conocerte, <em className="font-serif font-normal text-ember italic">soy {profile.firstName}</em>
+            Backend, deporte y <em className="font-serif font-normal text-ember italic">trabajo en equipo</em>
           </h2>
           {profile.about.map((p) => (
             <p key={p.slice(0, 20)} className="reveal mt-5 leading-relaxed text-sapphire-200">{p}</p>
