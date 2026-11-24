@@ -72,7 +72,7 @@ export default function Effects() {
       window.addEventListener("pointermove", onMove);
       document.addEventListener("pointerover", onOver);
       const follow = () => {
-        cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2;
+        cx += (tx - cx) * 0.22; cy += (ty - cy) * 0.22;
         if (dot.current) dot.current.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
         raf = requestAnimationFrame(follow);
       };
@@ -91,7 +91,7 @@ export default function Effects() {
 
   return (
     <>
-      <div ref={bar} aria-hidden="true" className="fixed inset-x-0 top-0 z-[200] h-[3px] origin-left scale-x-0 bg-gradient-to-r from-brand via-mint to-sun" />
+      <div ref={bar} aria-hidden="true" className="fixed inset-x-0 top-0 z-[200] h-[3px] origin-left scale-x-0 bg-ember" />
       <div ref={dot} aria-hidden="true" className="cursor-dot" />
     </>
   );
