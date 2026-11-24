@@ -6,8 +6,9 @@ import { getMedia, type Captions } from "@/lib/media";
 export const metadata: Metadata = { title: "Demo · StockFlow — Leider Cadena" };
 
 /* Demo de StockFlow: capturas REALES de la app (docs/screenshots del repositorio)
-   en public/demos/stockflow. Puedes agregar un video, por ejemplo 00-walkthrough.mp4 */
+   + el video del recorrido (00-walkthrough.mp4) en public/demos/stockflow */
 const captions: Captions = {
+  walkthrough: { title: "Recorrido completo de la app", note: "Video real: venta con cliente nuevo, factura en PDF, inventario y lectura de una factura de proveedor con IA." },
   dashboard: { title: "Inicio", note: "Ventas del día y del mes, ganancia, valor del inventario, ventas de 7 días, más vendidos y stock bajo." },
   "point-of-sale": { title: "Vender", note: "Punto de venta: búsqueda por código o lector, cliente, pago rápido, IVA y cambio. F2 buscar, F12 cobrar." },
   invoices: { title: "Facturas", note: "Consecutivo FV-000001, detalle, PDF y anulación que devuelve las unidades al inventario." },
