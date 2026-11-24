@@ -15,14 +15,14 @@ export const testimonials: Testimonial[] = [
     pending: true,
   },
   {
-    name: "Nombre del compañero/a",
-    role: "Compañero · Proyecto final Electiva 1",
-    text: "Aquí va lo que opina un compañero con quien trabajaste en equipo (por ejemplo en la API de emergencias).",
+    name: "Samuel Moreno",
+    role: "Compañero · Nexus-7 y API de emergencias",
+    text: "Aquí va lo que opina Samuel de trabajar contigo en equipo.",
     pending: true,
   },
   {
     name: "Nombre de tu jefe",
-    role: "Jefe · Experiencia laboral",
+    role: "Jefe · Flaco Sports",
     text: "Aquí va lo que opina tu jefe sobre tu responsabilidad, puntualidad y trato con los clientes.",
     pending: true,
   },

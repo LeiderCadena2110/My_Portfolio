@@ -9,32 +9,41 @@ export type Profile = {
   initials: string;
   role: string;
   semester: string;
-  tagline: string;
-  roles: string[]; // palabras que cambian en el Hero
+  greeting: string; // frase corta del Hero
+  roles: string[]; // palabras que se escriben solas en el Hero
+  statement: string; // frase grande de "Sobre mí"; las palabras entre **asteriscos** se resaltan
+  about: string[]; // párrafos de "Sobre mí"
+  motto: string; // frase con la que cierras "Sobre mí"
   location: string;
+  city: string;
+  timeZone: string; // para el reloj de la sección de contacto
   email: string;
   github: string;
-  githubUser: string;
+  githubUser: string; // usuario de GitHub, sin @
   linkedin: string;
   whatsapp?: string; // opcional: "https://wa.me/57XXXXXXXXXX"
   cvUrl: string; // archivo en /public
   formEndpoint: string; // URL de Formspree; vacío = abre la app de correo
 };
 
-export type ProjectMock = "phone" | "watch" | "infra" | "desktop" | "api" | "web";
-export type Theme = "blue" | "green" | "amber" | "slate";
+export type ProjectCover =
+  | { kind: "phone"; src: string }
+  | { kind: "window"; src: string }
+  | { kind: "watch" }; // ilustración del reloj mientras no haya capturas
 
 export type Project = {
+  slug: string;
   title: string;
   category: string;
+  year: string;
   description: string;
+  highlights: string[];
   tags: string[];
   github: string; // Link GitHub (obligatorio según la guía)
-  demo: string; // Link Vercel / Demo en vivo (obligatorio según la guía)
+  demo: string; // Link a la demo (obligatorio según la guía)
   extra?: { label: string; href: string }[]; // otros enlaces: APK, instaladores, versión web
-  image?: string; // captura real en /public/images (opcional)
-  mock: ProjectMock; // ilustración ligera si no hay captura
-  theme: Theme;
+  cover: ProjectCover;
+  collaboration?: { role: string; with: string; owner: string }; // proyecto hecho en equipo
 };
 
 export type Testimonial = {
@@ -51,11 +60,13 @@ export type ExperienceItem = {
   place: string;
   date: string;
   description: string;
+  highlights: string[];
+  stack?: string[];
 };
 
 export type StackKey = {
   label: string; // texto corto en la tecla
   name: string;
   description: string;
-  color: "blue" | "green" | "amber" | "slate" | "light";
+  color: "sapphire" | "deep" | "pearl" | "ember";
 };
