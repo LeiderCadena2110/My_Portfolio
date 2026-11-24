@@ -46,6 +46,7 @@ export const experience: ExperienceItem[] = [
       "Desarrollé y publiqué tres apps completas, de punta a punta: Minga App (celular), StockFlow (escritorio) y HidraSmart (reloj y celular). También colaboré con Samuel Moreno en el videojuego Escape Espacial: Nexus-7, hecho en Unity.",
     highlights: ["Código en GitHub con pull requests", "Instaladores y APK automáticos", "Servidores en Render y Neon"],
     stack: ["Node.js", "Java", "Kotlin", "C#", "PostgreSQL", "GitHub Actions"],
+    image: "/demos/stockflow/01-dashboard.webp",
   },
   {
     type: "laboral",
