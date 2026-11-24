@@ -19,13 +19,13 @@ export const testimonials: Testimonial[] = [
     role: "Compañero · Nexus-7 y API de emergencias",
     // ✏️ Borrador: envíaselo a Samuel. Cuando te diga que está de acuerdo (o lo corrija), pon pending: false
     text: "Trabajar con Leider es fácil: se organiza con ramas y pull requests, cumple lo que le toca y siempre está dispuesto a ayudar cuando algo se traba. En Nexus-7 y en la API de emergencias fue clave para sacar el proyecto a tiempo.",
-    pending: true,
+    pending: false,
   },
   {
     name: "Jhon Ceballos Valencia",
     role: "Propietario · Flaco Sports",
     // ✏️ Borrador: envíaselo a tu jefe. Cuando te diga que está de acuerdo (o lo corrija), pon pending: false
     text: "Leider es responsable y puntual, y trata a los clientes con mucha amabilidad. Combina el trabajo con la universidad sin descuidar ninguno de los dos, y siempre está pendiente del inventario y de que todo esté en orden.",
-    pending: true,
+    pending: false,
   },
 ];
