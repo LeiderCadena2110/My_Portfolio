@@ -17,7 +17,8 @@ siguiendo la guía del curso de Diseño de Interfaces: https://structure-portfol
 | 6. Experiencia **académica y laboral**, con fechas, de lo más reciente a lo más antiguo | `components/Experience.tsx` + `data/experience.ts` | ⚠️ cambia los `20XX` |
 | 7. Contactos: correo, LinkedIn, GitHub, formulario con validación y confirmación | `components/Contact.tsx` | ✅ (Formspree opcional) |
 | 8. Pie de página: nombre y © año, redes, enlaces, volver arriba, créditos | `components/Footer.tsx` | ✅ |
-| ⭐ Sección adicional | `components/Skills.tsx` (teclado 3D de habilidades) | ✅ |
+| ⭐ Secciones adicionales | `components/Skills.tsx` (teclado 3D) y `components/GithubActivity.tsx` (contribuciones en GitHub, en vivo) | ✅ |
+| Paleta 60·30·10 (zafiro, perla y naranja brasa) | `app/globals.css` | ✅ |
 | Responsive (celular, tablet, escritorio) | todas las secciones | ✅ |
 | Código en GitHub con commits | ver pasos abajo | ⏳ |
 | Publicado en Vercel | ver pasos abajo | ⏳ |
@@ -27,10 +28,10 @@ siguiendo la guía del curso de Diseño de Interfaces: https://structure-portfol
 ```
 mi-portafolio/
 ├─ app/
-│  ├─ demos/          /demos/minga · /demos/hidrasmart · /demos/stockflow
+│  ├─ demos/          /demos/minga · /demos/stockflow · /demos/hidrasmart · /demos/nexus
 │  ├─ layout.tsx      ← estructura global, SEO y fuentes
 │  ├─ page.tsx        ← une todas las secciones en orden
-│  └─ globals.css     ← Tailwind + tema de colores + efectos 3D
+│  └─ globals.css     ← Tailwind + paleta 60·30·10 + animaciones
 ├─ components/
 │  ├─ Navbar.tsx      1 Menú
 │  ├─ Hero.tsx        2 Hero + CV
@@ -38,12 +39,14 @@ mi-portafolio/
 │  ├─ Projects.tsx    4 Proyectos
 │  ├─ Testimonials.tsx 5 Testimonios
 │  ├─ Experience.tsx  6 Experiencia
-│  ├─ Skills.tsx      ⭐ Adicional (habilidades)
-│  ├─ Contact.tsx     7 Contactos (+ Globe.tsx)
+│  ├─ Skills.tsx      ⭐ Adicional 1 (habilidades)
+│  ├─ GithubActivity.tsx ⭐ Adicional 2 (contribuciones en GitHub)
+│  ├─ Contact.tsx     7 Contactos
 │  ├─ Footer.tsx      8 Pie de página
 │  ├─ Effects.tsx     barra de progreso, scroll reveal, efecto onda, cursor
 │  ├─ demos/          RealDemo (marcos y recorrido) · DemoShell (página y guion)
 │  └─ Icons.tsx       íconos SVG
+├─ lib/               ← media.ts (lee las capturas de las demos) · media-shared.ts
 ├─ data/              ← ✏️ TODO tu contenido, tipado con TypeScript
 │  ├─ types.ts · profile.ts · projects.ts · testimonials.ts · experience.ts · skills.ts
 └─ public/
@@ -76,21 +79,24 @@ npm run dev        # abre http://localhost:3000
 
 ## 🎤 Demos para la sustentación (tus apps reales)
 
-Cada proyecto tiene su página de demo con un **guion paso a paso** a la izquierda. Todo lo que se ve es la app real:
+Cada proyecto tiene su página de demo con un **guion paso a paso**. Todo lo que se ve es la app real:
 
 | Proyecto | Ruta | Qué muestra |
 |---|---|---|
-| Minga App | `/demos/minga` | **La app web real en vivo** (GitHub Pages) dentro de un celular + capturas opcionales |
-| HidraSmart | `/demos/hidrasmart` | Tus **capturas y videos del emulador** dentro de un reloj (o un celular) |
-| StockFlow | `/demos/stockflow` | Las **capturas reales** de la app (`docs/screenshots` del repositorio) y un video opcional |
+| Minga App | `/demos/minga` | 12 **capturas reales** de la app (comprador y productor) + pestaña con la **versión web en vivo** |
+| StockFlow | `/demos/stockflow` | Las 11 **capturas reales** de `docs/screenshots` del repositorio |
+| HidraSmart | `/demos/hidrasmart` | Tus **capturas y videos del emulador** dentro de un reloj (⚠️ falta agregarlas) |
+| Nexus-7 (colaborador) | `/demos/nexus` | El **video de la Fase 6** y las capturas de `docs/media` del repo `moreno-stack/Nexuz-7` |
 
 ### Cómo agregar capturas o videos
 
-1. Copia los archivos en `public/demos/minga/`, `public/demos/hidrasmart/` o `public/demos/stockflow/`.
-2. Nómbralos con número y título: `01-inicio.png`, `02-registrar-toma.png`, `03-entrenamiento.mp4`.
-   El número ordena el recorrido y el resto del nombre es el título que se muestra.
-3. Si termina en `-celular` (ej. `05-coach-celular.png`) se muestra en marco de celular; `-reloj`, en marco de reloj.
-4. Recarga la página (con `npm run dev` aparecen al instante; en Vercel, después del `git push`).
+1. Copia los archivos en `public/demos/<proyecto>/` (por ejemplo `public/demos/hidrasmart/`).
+2. Nómbralos **en inglés** con número: `01-home-watch.png`, `02-log-drink-watch.png`, `03-training.mp4`.
+   El número ordena el recorrido.
+3. Si el nombre termina en `-phone` se muestra en marco de celular; `-watch`, en marco de reloj.
+4. Escribe el título en español en la página de la demo (`app/demos/<proyecto>/page.tsx`, objeto `captions`),
+   usando el nombre sin número como clave: `"log-drink": { title: "Registrar una toma" }`.
+5. Recarga la página (con `npm run dev` aparecen al instante; en Vercel, después del `git push`).
 
 Formatos: `.png .jpg .webp .gif` y videos `.mp4 .webm` (cortos, de menos de 20 MB).
 
@@ -117,12 +123,14 @@ Haz un commit por cada cambio (ej. `feat: agrega testimonios`, `fix: fechas de e
 ## ▲ Publicar en Vercel
 
 1. Entra a https://vercel.com con tu cuenta de GitHub.
-2. **Add New → Project** → importa `mi-portafolio`.
-3. Vercel detecta Next.js solo: clic en **Deploy**.
+2. **Add New → Project** → importa `My_Portfolio`.
+3. En **Root Directory** elige `mi-portafolio` y clic en **Deploy**.
 4. Obtienes tu URL pública (ej. `leider-cadena.vercel.app`). Cada `git push` publica una nueva versión.
 5. Agrega esa URL como **Demo** del proyecto «Portafolio» y en tu LinkedIn.
 
 ## 🎨 Personalizar colores
 
 En `app/globals.css`, bloque `@theme`: cada `--color-x` genera clases como `bg-x`, `text-x`, `border-x`.
-Los fondos son azules y gris azulado (sin negro puro ni blanco puro, como pidió el profesor).
+La paleta sigue la regla **60 · 30 · 10**: zafiro profundo (60 %, fondos oscuros y textos),
+blanco perla (30 %, fondos claros) y naranja brasa `#FF5A12` (10 %, acentos). Sin negro ni blanco puro,
+como pidió el profesor.
