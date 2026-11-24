@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { stackKeys } from "@/data/skills";
 
 /* =============================================================================
-   ⭐ SECCIÓN ADICIONAL: HABILIDADES
+   ⭐ SECCIÓN ADICIONAL 1: HABILIDADES
    Teclado 3D hecho con CSS: cada tecla es una tecnología. Al pasar el cursor
    o tocarla se hunde y muestra su descripción en el panel.
    ============================================================================= */
@@ -31,22 +31,22 @@ export default function Skills() {
   }, []);
 
   const current = selected !== null ? stackKeys[selected] : null;
-  const sideColor: Record<string, string> = { blue: "#1d4ed8", green: "#047857", amber: "#b45309", slate: "#1e293b", light: "#94a3b8" };
+  const sideColor: Record<string, string> = { sapphire: "#1b3a8c", deep: "#071431", pearl: "#8a7f6c", ember: "#c43f05" };
 
   return (
-    <section id="habilidades" className="overflow-hidden bg-gradient-to-b from-brand-soft to-ice py-24 sm:py-32">
+    <section id="habilidades" data-theme="light" className="overflow-hidden bg-pearl py-24 sm:py-32">
       <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 lg:grid-cols-[.9fr_1.4fr]">
         <div className="text-center lg:text-left">
-          <p className="reveal font-mono text-sm tracking-widest text-mint-dark uppercase">05 — Habilidades ⭐</p>
-          <h2 className="reveal mt-2 font-display text-[clamp(1.9rem,4.5vw,3.4rem)] font-bold text-ink">Tech <span className="text-brand">Stack</span></h2>
-          <p className="reveal mt-2 mb-8 font-mono text-sm text-dim">(toca o pasa el cursor por una tecla)</p>
+          <p className="reveal kicker text-ember-700">Habilidades · Tecnologías</p>
+          <h2 className="reveal mt-3 font-display text-[clamp(2.2rem,5vw,3.8rem)] leading-[1.02] font-semibold tracking-tight text-sapphire-900">Mi <em className="font-serif font-normal text-ember-600 italic">stack</em> de trabajo</h2>
+          <p className="reveal mt-3 mb-8 text-stone">Toca o pasa el cursor por una tecla para ver para qué uso cada herramienta.</p>
 
-          <div key={panelKey} className="reveal panel-in mx-auto min-h-[190px] max-w-lg rounded-3xl bg-ink p-6 text-left shadow-[0_30px_50px_-30px_rgba(23,37,84,.8)]" aria-live="polite">
-            <span className="mb-4 inline-grid h-12 min-w-12 place-items-center rounded-xl px-2 font-mono text-sm font-bold text-snow" style={{ background: current ? sideColor[current.color] : "#2563eb" }}>
+          <div key={panelKey} className="reveal panel-in mx-auto min-h-[190px] max-w-lg rounded-3xl bg-sapphire-900 p-6 text-left shadow-[0_30px_50px_-30px_rgba(11,29,71,.8)]" aria-live="polite">
+            <span className="mb-4 inline-grid h-12 min-w-12 place-items-center rounded-xl px-2 font-mono text-sm font-bold text-pearl" style={{ background: current ? sideColor[current.color] : "#ff5a12" }}>
               {current ? current.label : "⌨️"}
             </span>
-            <h3 className="font-display text-lg font-bold text-snow">{current ? current.name : "Mi teclado de tecnologías"}</h3>
-            <p className="mt-1 text-haze">{current ? current.description : "Cada tecla es una herramienta que uso para construir software. Explóralas."}</p>
+            <h3 className="font-display text-lg font-semibold text-pearl">{current ? current.name : "Mi teclado de tecnologías"}</h3>
+            <p className="mt-1 text-sapphire-200">{current ? current.description : "Cada tecla es una herramienta que uso para construir software. Explóralas."}</p>
           </div>
         </div>
 
@@ -55,7 +55,7 @@ export default function Skills() {
             ref={board}
             role="group"
             aria-label="Tecnologías"
-            className="keyboard relative grid grid-cols-[repeat(5,var(--key))] gap-[var(--gap)] rounded-[22px] bg-gradient-to-br from-slate-600 to-ink p-[calc(var(--gap)*2.2)] max-[480px]:[--gap:6px] max-[480px]:[--key:44px]"
+            className="keyboard relative grid grid-cols-[repeat(5,var(--key))] gap-[var(--gap)] rounded-[22px] bg-gradient-to-br from-sapphire-700 to-sapphire-950 p-[calc(var(--gap)*2.2)] max-[480px]:[--gap:6px] max-[480px]:[--key:44px]"
           >
             {stackKeys.map((k, i) => (
               <button
