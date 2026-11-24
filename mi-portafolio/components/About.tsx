@@ -1,97 +1,120 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useRef } from "react";
 import { profile } from "@/data/profile";
+import Icon from "./Icons";
 
 /* =============================================================================
    3. ACERCA DE MÍ
-   Párrafo de presentación (3–5 líneas) · foto · habilidades · datos rápidos
+   - Frase grande que se ilumina palabra por palabra al hacer scroll.
+   - Cinta de tecnologías.
+   - Foto, párrafo corto, datos rápidos y habilidades principales.
    ============================================================================= */
+const techs = ["Node.js", "NestJS", "Express", "Java", "Spring Boot", "PostgreSQL", "Docker", "TypeScript", "AWS", "Git"];
+const skills = ["APIs REST", "Modelado de datos", "Arquitectura hexagonal", "Patrones de diseño", "Pruebas automáticas", "CI/CD con GitHub Actions"];
 const facts = [
-  { icon: "📍", label: "Pasto, Colombia" },
-  { icon: "🎓", label: profile.semester },
-  { icon: "🧩", label: "Backend y arquitectura" },
-  { icon: "💼", label: "Estudio y trabajo" },
+  { label: "Ubicación", value: "Pasto, Nariño" },
+  { label: "Estudio", value: "Ing. de Software · 5.º sem." },
+  { label: "Enfoque", value: "Backend y bases de datos" },
+  { label: "Busco", value: "Prácticas y primer empleo" },
 ];
 
-const skills = ["Node.js", "NestJS", "Java · Spring Boot", "Python", "PostgreSQL", "Docker", "Git", "TypeScript", "HTML", "Tailwind CSS"];
-
-const focus = [
-  {
-    num: "01",
-    title: "Backend & Datos",
-    text: "Diseño APIs REST claras y modelo bases de datos relacionales sólidas, con capas bien separadas y principios SOLID.",
-  },
-  {
-    num: "02",
-    title: "Arquitectura & Cloud",
-    text: "Pienso la solución antes de programar y la despliego en la nube: alta disponibilidad, contenedores y servicios gestionados.",
-  },
-];
+/* Convierte "texto **resaltado**" en palabras sueltas, marcando las resaltadas */
+const words = profile.statement.split(/(\*\*[^*]+\*\*)/).flatMap((part) => {
+  const strong = part.startsWith("**");
+  return part.replace(/\*\*/g, "").split(" ").filter(Boolean).map((w) => ({ w, strong }));
+});
 
 export default function About() {
+  const statement = useRef<HTMLParagraphElement>(null);
+
+  // Ilumina las palabras según cuánto has bajado por la frase
+  useEffect(() => {
+    const el = statement.current;
+    if (!el) return;
+    const spans = Array.from(el.querySelectorAll<HTMLSpanElement>(".word"));
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const progress = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
+      const lit = Math.round(progress * spans.length);
+      spans.forEach((s, i) => s.classList.toggle("on", i < lit));
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
+    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
+  }, []);
+
   return (
-    <section id="sobre-mi" className="bg-ink py-24 sm:py-32">
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[.8fr_1.6fr] lg:gap-16">
-        {/* Foto + datos rápidos */}
-        <div className="reveal lg:sticky lg:top-28 lg:self-start">
-          <p className="font-mono text-sm tracking-widest text-mint uppercase">01 — Sobre mí</p>
-          <div className="mx-auto mt-6 max-w-sm overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-brand/30 to-mint/15 p-4 lg:max-w-none">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/leider-about.webp" alt={`Retrato de ${profile.name}`} width={600} height={700} loading="lazy" className="aspect-[6/7] w-full rounded-2xl object-cover" />
-            <p className="mt-4 font-display text-sm font-bold text-snow">{profile.name}</p>
-            <p className="text-sm text-haze">{profile.role}</p>
-          </div>
-          <ul className="mx-auto mt-4 grid max-w-sm grid-cols-2 gap-2 text-sm lg:max-w-none" aria-label="Datos rápidos">
-            {facts.map((f) => (
-              <li key={f.label} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-snow">
-                <span aria-hidden="true">{f.icon}</span> {f.label}
-              </li>
+    <section id="sobre-mi" data-theme="dark" className="relative -mt-8 overflow-hidden rounded-t-[36px] bg-sapphire-900 text-pearl">
+      {/* Frase grande */}
+      <div className="mx-auto max-w-5xl px-5 pt-28 pb-16 text-center sm:pt-36">
+        <p className="kicker text-sapphire-300">Sobre mí</p>
+        <p ref={statement} className="mt-8 font-display text-[clamp(1.7rem,4.2vw,3.4rem)] leading-[1.18] font-light tracking-tight">
+          {words.map(({ w, strong }, i) => (
+            <span key={i} className={`word ${strong ? "font-semibold text-pearl" : "text-sapphire-200"}`}>{w} </span>
+          ))}
+        </p>
+      </div>
+
+      {/* Cinta de tecnologías */}
+      <div className="border-y border-sapphire-800 py-5" aria-label="Tecnologías que uso">
+        <div className="flex overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
+          <ul className="marquee flex shrink-0 gap-10 pr-10 kicker whitespace-nowrap text-sapphire-300">
+            {[...techs, ...techs].map((t, i) => (
+              <li key={i} aria-hidden={i >= techs.length} className="flex items-center gap-10">{t} <span className="text-ember">✦</span></li>
             ))}
           </ul>
         </div>
+      </div>
 
-        <div>
-          {/* ✏️ Presentación en primera persona: 3–5 líneas, que se lea en 20 segundos */}
-          <h2 className="reveal font-display text-[clamp(1.7rem,3.4vw,2.6rem)] leading-tight font-bold text-snow">
-            Construyo el <span className="text-gradient">motor</span> que hace funcionar las aplicaciones.
-          </h2>
-          <p className="reveal mt-6 text-lg leading-relaxed text-haze">
-            Soy estudiante de quinto semestre de Ingeniería de Software en la Universidad Cooperativa de Colombia, en Pasto,
-            y trabajo mientras estudio, lo que me enseñó a organizarme y a entender a los usuarios. Me apasionan el{" "}
-            <strong className="text-snow">backend</strong>, la <strong className="text-snow">arquitectura de software</strong> y las{" "}
-            <strong className="text-snow">bases de datos</strong>: me gusta resolver problemas con código limpio y soluciones robustas.
-          </p>
-
-          {/* Lo que hago */}
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            {focus.map((f, i) => (
-              <article key={f.title} className="reveal lift rounded-2xl border border-dashed border-white/15 bg-brand/10 p-6" style={{ ["--i" as string]: i }}>
-                <span className="font-mono text-sm text-mint">{f.num}</span>
-                <h3 className="mt-2 font-display text-lg font-bold text-snow uppercase">{f.title}</h3>
-                <p className="mt-2 text-haze">{f.text}</p>
-              </article>
-            ))}
+      {/* Foto + presentación */}
+      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-24 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
+        <div className="reveal relative mx-auto w-full max-w-[460px]">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[28px]">
+            <Image src="/images/leider-about.webp" alt={`${profile.firstName} programando en su portátil`} fill sizes="(max-width: 1024px) 90vw, 460px"
+              className="object-cover transition-transform duration-700 hover:scale-[1.04]" />
+            <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-sapphire-950/70 via-transparent to-transparent" />
+            <p className="absolute bottom-5 left-5 kicker text-pearl">Pasto · {new Date().getFullYear()}</p>
           </div>
+          <div className="absolute -right-3 -bottom-6 rounded-2xl bg-ember px-5 py-4 text-sapphire-950 shadow-xl sm:-right-8">
+            <p className="font-display text-3xl font-bold leading-none">3+1</p>
+            <p className="mt-1 text-xs font-semibold">apps terminadas<br />y un videojuego</p>
+          </div>
+        </div>
 
-          {/* Habilidades / tecnologías */}
-          <h3 className="reveal mt-10 font-mono text-xs tracking-widest text-brand-light uppercase">Tecnologías que manejo</h3>
-          <ul className="reveal mt-4 flex flex-wrap gap-2">
-            {skills.map((s) => (
-              <li key={s} className="rounded-full border border-mint/30 bg-mint/10 px-3.5 py-1.5 text-sm text-snow">{s}</li>
-            ))}
-          </ul>
+        <div className="min-w-0">
+          <p className="reveal kicker text-ember">Resumen</p>
+          <h2 className="reveal mt-3 font-display text-[clamp(2rem,4.5vw,3.4rem)] leading-[1.05] font-medium tracking-tight">
+            Encantado de conocerte, <em className="font-serif font-normal text-ember italic">soy {profile.firstName}</em>
+          </h2>
+          {profile.about.map((p) => (
+            <p key={p.slice(0, 20)} className="reveal mt-5 leading-relaxed text-sapphire-200">{p}</p>
+          ))}
+          <p className="reveal mt-5 border-l-2 border-ember pl-4 font-serif text-xl text-pearl italic">“{profile.motto}”</p>
 
-          {/* Números */}
-          <dl className="mt-10 grid grid-cols-3 gap-3">
-            {[
-              ["5.º", "semestre"],
-              ["3", "apps con demo"],
-              ["15+", "tecnologías"],
-            ].map(([n, l], i) => (
-              <div key={l} className="reveal rounded-2xl border border-white/10 bg-brand/10 p-4" style={{ ["--i" as string]: i }}>
-                <dt className="font-display text-2xl font-extrabold text-sun sm:text-3xl">{n}</dt>
-                <dd className="mt-1 text-sm text-haze">{l}</dd>
+          <dl className="reveal mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-sapphire-800">
+            {facts.map((f) => (
+              <div key={f.label} className="bg-sapphire-900 p-4">
+                <dt className="kicker text-sapphire-300">{f.label}</dt>
+                <dd className="mt-1.5 text-sm font-semibold">{f.value}</dd>
               </div>
             ))}
           </dl>
+
+          <ul className="reveal mt-8 flex flex-wrap gap-2" aria-label="Habilidades principales">
+            {skills.map((s) => (
+              <li key={s} className="rounded-full border border-sapphire-700 px-3.5 py-1.5 text-sm text-sapphire-200 transition hover:border-ember hover:text-pearl">{s}</li>
+            ))}
+          </ul>
+
+          <a href={profile.cvUrl} download className="reveal arrow-link mt-10 inline-flex items-center gap-2 border-b border-ember pb-1 text-sm font-semibold text-pearl">
+            Descargar mi hoja de vida <Icon name="download" className="size-4" />
+          </a>
         </div>
       </div>
     </section>
