@@ -63,7 +63,7 @@ export const projects: Project[] = [
     github: "https://github.com/LeiderCadena2110/App_Smartwatch",
     demo: "/demos/hidrasmart",
     extra: [{ label: "APK", href: "https://github.com/LeiderCadena2110/App_Smartwatch/releases" }],
-    cover: { kind: "watch" },
+    cover: { kind: "watch", src: "/demos/hidrasmart/02-home.webp" },
   },
   {
     slug: "nexus",
