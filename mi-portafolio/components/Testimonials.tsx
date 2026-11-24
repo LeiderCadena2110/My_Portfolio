@@ -33,7 +33,7 @@ export default function Testimonials() {
                 </blockquote>
                 {t.pending && (
                   <p className={`mt-4 w-fit rounded-full px-3 py-1 kicker ${i === 1 ? "bg-sapphire-800 text-sapphire-200" : "bg-ember-100 text-ember-700"}`}>
-                    Testimonio pendiente
+                    Pendiente de confirmar
                   </p>
                 )}
                 <figcaption className={`mt-6 flex items-center gap-3 border-t pt-5 ${i === 1 ? "border-sapphire-800" : "border-pearl-300"}`}>
