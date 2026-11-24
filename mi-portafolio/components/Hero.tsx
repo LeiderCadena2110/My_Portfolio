@@ -1,132 +1,137 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { profile } from "@/data/profile";
 import Icon from "./Icons";
 
 /* =============================================================================
-   2. BIENVENIDA / HERO CON CV
-   Nombre grande · rol · foto · frase corta · botón «Descargar CV» (obligatorio)
-   · botón secundario «Ver proyectos». Foto con órbita 3D de tecnologías.
+   2. HERO + CV
+   Nombre, rol que se escribe solo, foto, frase de presentación,
+   botón "Descargar CV" (obligatorio) y botón secundario "Ver proyectos".
    ============================================================================= */
-const orbitChips = ["NestJS", "PostgreSQL", "Docker", "Spring", "Node", "AWS", "Python", "Git"];
 
-export default function Hero() {
-  const [role, setRole] = useState(0);
-  const [leaving, setLeaving] = useState<number | null>(null);
-  const stage = useRef<HTMLDivElement>(null);
-
-  // Palabra que cambia cada 2,6 s
+/* Rol que se escribe y se borra letra por letra, con cursor de bloque */
+function useTypewriter(words: string[]) {
+  const [text, setText] = useState(words[0]);
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    let current = 0;
-    const id = setInterval(() => {
-      setLeaving(current);
-      current = (current + 1) % profile.roles.length;
-      setRole(current);
-    }, 2600);
-    return () => clearInterval(id);
-  }, []);
+    let w = 0, i = words[0].length, deleting = true, t: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      const word = words[w];
+      i += deleting ? -1 : 1;
+      setText(word.slice(0, i));
+      let delay = deleting ? 45 : 85;
+      if (!deleting && i === word.length) { deleting = true; delay = 1800; }
+      else if (deleting && i === 0) { deleting = false; w = (w + 1) % words.length; delay = 350; }
+      t = setTimeout(tick, delay);
+    };
+    t = setTimeout(tick, 2200);
+    return () => clearTimeout(t);
+  }, [words]);
+  return text;
+}
 
-  // Inclina la foto con el mouse (efecto 3D)
+export default function Hero() {
+  const role = useTypewriter(profile.roles);
+  const card = useRef<HTMLDivElement>(null);
+
+  // Inclinación 3D suave de la tarjeta de la foto al mover el mouse
   const onMove = (e: React.PointerEvent) => {
-    if (e.pointerType !== "mouse" || !stage.current) return;
-    const x = e.clientX / window.innerWidth - 0.5;
-    const y = e.clientY / window.innerHeight - 0.5;
-    stage.current.style.transform = `rotateY(${x * 18}deg) rotateX(${-y * 10}deg)`;
+    const el = card.current;
+    if (!el || e.pointerType !== "mouse") return;
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    el.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
   };
+  const onLeave = () => { if (card.current) card.current.style.transform = ""; };
+
+  const socials = [
+    { icon: "github" as const, href: profile.github, label: "GitHub" },
+    { icon: "linkedin" as const, href: profile.linkedin, label: "LinkedIn" },
+    { icon: "mail" as const, href: `mailto:${profile.email}`, label: "Correo" },
+  ];
 
   return (
-    <section
-      id="inicio"
-      onPointerMove={onMove}
-      onPointerLeave={() => stage.current && (stage.current.style.transform = "")}
-      className="relative flex min-h-svh items-center overflow-hidden pt-24 pb-24 lg:pt-20
-        bg-[radial-gradient(ellipse_60%_70%_at_50%_55%,rgba(37,99,235,.55),transparent_70%),radial-gradient(ellipse_40%_40%_at_15%_90%,rgba(16,185,129,.25),transparent_70%),radial-gradient(ellipse_30%_30%_at_90%_15%,rgba(245,158,11,.16),transparent_70%),linear-gradient(180deg,#172554,#1e3a8a)]"
-    >
-      <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+    <section id="inicio" data-theme="light" className="relative overflow-hidden bg-pearl pt-28 pb-24 sm:pt-32 lg:pb-32">
+      <div aria-hidden="true" className="bg-dots pointer-events-none absolute inset-0 text-pearl-300 [mask-image:radial-gradient(ellipse_at_70%_40%,#000_10%,transparent_65%)]" />
 
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-8 px-5 text-center lg:grid-cols-[1fr_1.05fr_1.1fr] lg:text-left">
-        {/* Izquierda: nombre */}
-        <div>
-          <p className="enter mb-2 font-mono text-sm text-brand-light" style={{ ["--d" as string]: 0 }}>Hola, soy</p>
-          <h1 className="enter font-display text-[clamp(2rem,4.6vw,3.1rem)] leading-[1.08] font-extrabold tracking-tight text-snow" style={{ ["--d" as string]: 1 }}>
-            Leider Alexander <span className="text-gradient">Cadena Cabrera</span>
+      <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-[1.15fr_.85fr]">
+        <div className="min-w-0">
+          <div className="enter flex items-center gap-2" style={{ ["--d" as string]: 0 }}>
+            {socials.map((s) => (
+              <a key={s.label} href={s.href} target={s.icon === "mail" ? undefined : "_blank"} rel="noopener noreferrer" aria-label={s.label}
+                className="grid size-8 place-items-center rounded-full text-stone transition hover:bg-sapphire-900 hover:text-pearl">
+                <Icon name={s.icon} className="size-4" />
+              </a>
+            ))}
+          </div>
+
+          <p className="enter kicker mt-6 text-stone" style={{ ["--d" as string]: 1 }}>
+            {profile.location} <span className="text-ember">·</span> {profile.semester}
+          </p>
+
+          <h1 className="enter mt-4 font-display text-[clamp(3rem,9vw,7.2rem)] leading-[.95] font-medium tracking-tight text-sapphire-900" style={{ ["--d" as string]: 2 }}>
+            ¡Hola! 👋
+            <br />
+            Soy <em className="font-serif font-normal text-ember-600 italic">{profile.firstName}.</em>
           </h1>
-        </div>
 
-        {/* Centro: foto con órbita 3D */}
-        <div className="enter mx-auto w-[min(270px,66vw)] [perspective:1200px] lg:w-[min(27vw,350px)]" style={{ ["--d" as string]: 2 }}>
-          <div ref={stage} className="stage relative aspect-[520/604]">
-            <div className="absolute top-[-4%] left-1/2 aspect-square w-[115%] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(37,99,235,.9)_0%,rgba(30,58,138,.2)_55%,transparent_70%)]" aria-hidden="true" />
-            <div className="absolute top-[-8%] left-1/2 aspect-square w-[120%] -translate-x-1/2 animate-[spin_40s_linear_infinite] rounded-full border border-dashed border-brand-light/35" aria-hidden="true" />
-            <ul className="orbit" aria-hidden="true">
-              {orbitChips.map((c, i) => (
-                <li
-                  key={c}
-                  style={{ ["--a" as string]: `${(360 / orbitChips.length) * i}deg` }}
-                  className={`rounded-full border border-white/60 px-3 py-1.5 font-mono text-[11px] font-medium text-ink shadow-lg max-lg:[--r:160px] lg:[--r:205px] ${i % 3 === 0 ? "bg-emerald-100" : i % 4 === 0 ? "bg-amber-100" : "bg-brand-soft"}`}
-                >
-                  {c}
-                </li>
-              ))}
-            </ul>
-            {/* ✏️ Tu foto: public/images/leider-cutout.webp (fondo transparente) */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/leider-cutout.webp"
-              alt={`Foto de ${profile.name}`}
-              width={520}
-              height={604}
-              fetchPriority="high"
-              className="photo-fade relative size-full object-contain object-bottom drop-shadow-[0_30px_30px_rgba(23,37,84,.55)] [transform:translateZ(40px)]"
-            />
+          <p className="enter mt-5 min-h-[1.4em] text-[clamp(1.25rem,2.6vw,1.9rem)] font-light text-sapphire-800" style={{ ["--d" as string]: 3 }} aria-label={profile.roles.join(", ")}>
+            <span aria-hidden="true">{role}<span className="caret" /></span>
+          </p>
+
+          <p className="enter mt-6 max-w-xl leading-relaxed text-stone" style={{ ["--d" as string]: 4 }}>
+            {profile.greeting}
+          </p>
+
+          <div className="enter mt-9 flex flex-wrap gap-3" style={{ ["--d" as string]: 5 }}>
+            <a href={profile.cvUrl} download
+              className="ripple inline-flex items-center gap-2 rounded-full bg-sapphire-900 px-6 py-3.5 text-sm font-semibold whitespace-nowrap text-pearl shadow-[0_14px_30px_-14px_rgba(11,29,71,.9)] transition hover:-translate-y-0.5 hover:bg-sapphire-800">
+              <Icon name="download" className="size-4" /> Descargar CV
+            </a>
+            <a href="#proyectos"
+              className="ripple arrow-link inline-flex items-center gap-2 rounded-full border border-sapphire-900/20 px-6 py-3.5 text-sm font-semibold whitespace-nowrap text-sapphire-900 transition hover:border-ember hover:text-ember-700">
+              Ver proyectos <Icon name="external" className="size-4" />
+            </a>
           </div>
         </div>
 
-        {/* Derecha: rol, frase y botones */}
-        <div className="lg:text-right">
-          <p className="enter mb-2 font-mono text-sm text-brand-light" style={{ ["--d" as string]: 2 }}>
-            {profile.role} · {profile.semester}
-          </p>
-          <p className="enter mb-4 font-display text-[clamp(1.4rem,2.5vw,2.1rem)] font-extrabold text-sun" style={{ ["--d" as string]: 3 }} aria-live="polite">
-            <span className="roles">
-              {profile.roles.map((r, i) => (
-                <span key={r} className={i === role ? "on" : i === leaving ? "off" : ""}>{r}</span>
-              ))}
-            </span>
-          </p>
-          <p className="enter mx-auto mb-7 max-w-md text-haze lg:mr-0" style={{ ["--d" as string]: 4 }}>{profile.tagline}</p>
+        {/* Tarjeta de la foto */}
+        <div className="enter mx-auto w-full max-w-[400px] [perspective:1200px]" style={{ ["--d" as string]: 3 }} onPointerMove={onMove} onPointerLeave={onLeave}>
+          <div ref={card} className="relative transition-transform duration-300 ease-out [transform-style:preserve-3d]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-sapphire-900 shadow-[0_50px_80px_-40px_rgba(11,29,71,.9)]">
+              {/* Símbolos de código de fondo */}
+              <div aria-hidden="true" className="absolute inset-0 font-mono text-sapphire-700 select-none">
+                <span className="absolute top-[12%] left-[8%] text-5xl">&lt;/&gt;</span>
+                <span className="absolute top-[22%] right-[10%] text-4xl">{"{ }"}</span>
+                <span className="absolute top-[48%] left-[6%] text-3xl">( )</span>
+                <span className="absolute top-[40%] right-[8%] text-3xl">=&gt;</span>
+              </div>
+              <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-2/3 bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,90,18,.35),transparent_65%)]" />
+              <Image src="/images/leider-cutout.webp" alt={`Foto de ${profile.name}`} fill priority sizes="(max-width: 1024px) 90vw, 400px"
+                className="object-contain object-bottom [transform:translateZ(30px)]" />
 
-          <div className="enter flex flex-col justify-center gap-3 sm:flex-row lg:justify-end" style={{ ["--d" as string]: 5 }}>
-            {/* Botón obligatorio: descarga public/cv.pdf */}
-            <a href={profile.cvUrl} download className="ripple group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-brand px-5 py-3.5 font-bold text-snow shadow-[0_10px_30px_-10px_rgba(37,99,235,.9)] transition hover:-translate-y-1 hover:bg-brand-dark">
-              Descargar CV <Icon name="download" className="size-[18px] transition group-hover:translate-y-0.5" />
-            </a>
-            <a href="#proyectos" className="ripple group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/20 bg-white/5 px-5 py-3.5 font-bold text-snow transition hover:-translate-y-1 hover:border-mint hover:bg-mint/15">
-              Ver proyectos <Icon name="arrow" className="size-[18px] transition group-hover:translate-x-1" />
-            </a>
+              {/* Etiqueta inferior */}
+              <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-2xl border border-pearl/10 bg-sapphire-950/70 px-4 py-3 backdrop-blur-md">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-pearl">@{profile.githubUser}</p>
+                  <p className="text-xs text-sapphire-300">Disponible para prácticas</p>
+                </div>
+                <span className="ping-soft size-2.5 shrink-0 rounded-full bg-online" aria-label="Disponible" />
+              </div>
+            </div>
+            <span className="float-y absolute -top-4 -left-4 rounded-full bg-ember px-3.5 py-1.5 kicker font-bold text-sapphire-950 shadow-lg [transform:translateZ(60px)]">
+              Backend
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Redes + indicador de scroll */}
-      <ul className="enter absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2.5 lg:left-[max(1.25rem,calc((100vw-72rem)/2+1.25rem))] lg:translate-x-0" style={{ ["--d" as string]: 6 }} aria-label="Redes">
-        {[
-          { href: profile.github, icon: "github" as const, label: "GitHub" },
-          { href: profile.linkedin, icon: "linkedin" as const, label: "LinkedIn" },
-          { href: `mailto:${profile.email}`, icon: "mail" as const, label: "Correo" },
-        ].map((s) => (
-          <li key={s.label}>
-            <a href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" aria-label={s.label}
-              className="grid size-[42px] place-items-center rounded-full border border-white/15 bg-white/5 text-haze transition hover:-translate-y-1 hover:border-brand-light hover:bg-brand/35 hover:text-snow">
-              <Icon name={s.icon} className="size-[18px]" />
-            </a>
-          </li>
-        ))}
-      </ul>
-      <a href="#sobre-mi" aria-label="Bajar a Sobre mí" className="absolute right-[max(1.25rem,calc((100vw-72rem)/2+1.25rem))] bottom-6 hidden items-center gap-3 font-mono text-xs tracking-[.15em] text-haze uppercase lg:flex">
-        Scroll <span className="relative h-12 w-px overflow-hidden bg-white/20"><span className="drip absolute inset-0 bg-mint" /></span>
+      <a href="#sobre-mi" aria-label="Bajar a Sobre mí" className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-stone lg:flex">
+        <span className="kicker">Scroll</span>
+        <span className="h-10 w-px overflow-hidden bg-pearl-300"><span className="scroll-cue block h-1/2 w-px bg-ember" /></span>
       </a>
     </section>
   );
