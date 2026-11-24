@@ -94,7 +94,7 @@ export default function Contact() {
       <div className="relative mx-auto max-w-7xl px-5">
         {/* Encabezado grande, centrado */}
         <div className="text-center">
-          <p className="reveal kicker text-sapphire-300">Ponte en contacto</p>
+          <p className="reveal kicker text-sapphire-300">¿Hablamos?</p>
           <p className="reveal mt-2 kicker text-sapphire-300" suppressHydrationWarning>
             {profile.city} <span className="text-ember">/</span> {time || "--:--"} COT
           </p>
@@ -104,8 +104,8 @@ export default function Contact() {
             <span className="font-serif font-normal tracking-normal text-ember normal-case italic">juntos</span>
           </h2>
           <p className="reveal mx-auto mt-8 max-w-xl text-sapphire-200">
-            Gracias por llegar hasta aquí. Si crees que puedo sumar a tu equipo, tienes una vacante de prácticas o
-            simplemente quieres preguntarme algo, escríbeme: te respondo lo antes posible.
+            Estoy buscando prácticas y proyectos donde aprender con un equipo. Si tienes una idea, una vacante o
+            una pregunta sobre alguno de mis proyectos, escríbeme.
           </p>
           <div className="reveal mt-8 flex flex-wrap items-center justify-center gap-3">
             <a href={`mailto:${profile.email}`} className="arrow-link inline-flex items-center gap-2 border-b border-ember pb-1 text-lg font-medium break-all hover:text-ember sm:text-xl">
